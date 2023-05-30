@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #Déplacement vers le répertoire /tmp
+
 cd /tmp
 
 #Installation des paquets ProFTPD, OpenSSL et ProFTPD-mod-crypto
@@ -10,17 +11,28 @@ apt-get install -y proftpd openssl proftpd-mod-crypto wget
 # Arrêt du service ProFTPD
 service proftpd stop
 
+#Créer le dossier ssl
+
+mkdir /etc/proftpd/ssl
+
 #Génération de la clé d'authentification
-openssl req -x509 -nodes -newkey  rsa:2048 -keyout /etc/proftpd/ftpd.key -out /etc/proftpd/ftpd.crt -days 365
+openssl req -x509 -nodes -newkey  rsa:2048 -keyout /etc/proftpd/sell/proftpd.key -out /etc/proftpd/sell/proftpd.cert -days 365
+
+#Replacement/Remplacement
+cd /etc/proftpd
+rm /etc/proftpd/proftpd.conf
+rm /etc/proftpd/tls.conf
+rm /etc/proftpd/modules.conf
 
 #Récupération des fichiers de configuration depuis GitHub
-wget https://raw.githubusercontent.com/Leo-Lentz/ForScriptBashFTP/main/modules.conf -o /etc/proftpd/modules.conf
-wget https://raw.githubusercontent.com/Leo-Lentz/ForScriptBashFTP/main/proftpd.conf -o /etc/proftpd/proftpd.conf
-wget https://raw.githubusercontent.com/Leo-Lentz/ForScriptBashFTP/main/tls.conf -o /etc/proftpd/tls.conf
+
+wget https://raw.githubusercontent.com/Leo-Lentz/ForScriptBashFTP/main/modules.conf
+wget https://raw.githubusercontent.com/Leo-Lentz/ForScriptBashFTP/main/proftpd.conf
+wget https://raw.githubusercontent.com/Leo-Lentz/ForScriptBashFTP/main/tls.conf
 
 #Donner les droits appropriés à la clé et au certificat
-chmod 600 /etc/proftpd/ftpd.key
-chmod 600 /etc/proftpd/ftpd.crt
+chmod 600 /etc/proftpd/sell/proftpd.key
+chmod 600 /etc/proftpd/sell/proftpd.cert
 
 #Redémarrage du service ProFTPD
 service proftpd restart
