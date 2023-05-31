@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 
 #Déplacement vers le répertoire /tmp
 
@@ -16,7 +16,8 @@ service proftpd stop
 mkdir /etc/proftpd/ssl
 
 #Génération de la clé d'authentification
-openssl req -x509 -nodes -newkey  rsa:2048 -keyout /etc/proftpd/sell/proftpd.key -out /etc/proftpd/sell/proftpd.cert -days 365
+openssl genrsa -out /etc/proftpd/ssl/proftpd.key 4096 
+openssl req -new -x509 -days 3650 -key /etc/proftpd/ssl/proftpd.key -out /etc/proftpd/ssl/proftpd.cert
 
 #Replacement/Remplacement
 cd /etc/proftpd
@@ -31,8 +32,8 @@ wget https://raw.githubusercontent.com/Leo-Lentz/ForScriptBashFTP/main/proftpd.c
 wget https://raw.githubusercontent.com/Leo-Lentz/ForScriptBashFTP/main/tls.conf
 
 #Donner les droits appropriés à la clé et au certificat
-chmod 600 /etc/proftpd/sell/proftpd.key
-chmod 600 /etc/proftpd/sell/proftpd.cert
+chmod 640 /etc/proftpd/ssl/proftpd.key
+chmod 640 /etc/proftpd/ssl/proftpd.cert
 
 #Redémarrage du service ProFTPD
 service proftpd restart
