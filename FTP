@@ -1,9 +1,5 @@
 #!/bin/bash 
 
-#Déplacement vers le répertoire /tmp
-
-cd /tmp
-
 #Installation des paquets ProFTPD, OpenSSL et ProFTPD-mod-crypto
 apt-get update
 apt-get install -y proftpd openssl proftpd-mod-crypto wget 
